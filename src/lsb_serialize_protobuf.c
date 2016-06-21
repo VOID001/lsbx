@@ -588,7 +588,7 @@ int lsb_serialize_table_as_pb(lua_sandbox* lsb, int index)
     if (lsb_realloc_output(d, needed)) return 1;
   }
 
-  fprintf(stderr, "VOID DEBUG: %d:%d lsb_serialize_table_as_pb\n", __FILE__, __LINE__);
+  fprintf(stderr, "VOID DEBUG: %s:%d lsb_serialize_table_as_pb\n", __FILE__, __LINE__);
   // use existing or create a type 4 uuid
   lua_getfield(lsb->lua, index, "Uuid");
   size_t len;
@@ -618,7 +618,7 @@ int lsb_serialize_table_as_pb(lua_sandbox* lsb, int index)
   }
   lua_pop(lsb->lua, 1); // remove timestamp
 
-  fprintf(stderr, "VOID DEBUG: %d:%d lsb_serialize_table_as_pb\n", __FILE__, __LINE__);
+  fprintf(stderr, "VOID DEBUG: %s:%d lsb_serialize_table_as_pb\n", __FILE__, __LINE__);
   if (pb_write_tag(d, 2, 0)) return 1;
   if (pb_write_varint(d, ts)) return 1;
 
@@ -630,7 +630,7 @@ int lsb_serialize_table_as_pb(lua_sandbox* lsb, int index)
   if (encode_int(lsb, d, 8, "Pid", index)) return 1;
   if (encode_string(lsb, d, 9, "Hostname", index)) return 1;
   if (encode_fields(lsb, d, 10, "Fields", index)) return 1;
-  fprintf(stderr, "VOID DEBUG: %d:%d lsb_serialize_table_as_pb\n", __FILE__, __LINE__);
+  fprintf(stderr, "VOID DEBUG: %s:%d lsb_serialize_table_as_pb\n", __FILE__, __LINE__);
   // if we go above 15 pb_write_tag will need to start varint encoding
   needed = 1;
   if (needed > d->size - d->pos) {
