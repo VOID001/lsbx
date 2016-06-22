@@ -586,6 +586,7 @@ encode_fields(lua_sandbox* lsb, lsb_output_data* d, char id, const char* name,
 int lsb_serialize_table_as_pb(lua_sandbox* lsb, int index)
 {
   fprintf(stderr, "Call lsb_serialize_table_as_pb(%X, %d)\n", (unsigned int)lsb, index);
+  fprintf(stderr, "DEBUG: the stack size of the function call is %d\n", lua_gettop(lsb->lua));
   lsb_output_data* d = &lsb->output;
   d->pos = 0;
   size_t needed = 18;
