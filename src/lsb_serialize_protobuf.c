@@ -26,6 +26,8 @@
  *
  * @return int Zero on success, non-zero if out of memory.
  */
+void debugcrash();
+
 static int pb_write_varint(lsb_output_data* d, unsigned long long i)
 {
   size_t needed = MAX_VARINT_BYTES;
@@ -630,7 +632,11 @@ int lsb_serialize_table_as_pb(lua_sandbox* lsb, int index)
   if (encode_int(lsb, d, 8, "Pid", index)) return 1;
   if (encode_string(lsb, d, 9, "Hostname", index)) return 1;
   fprintf(stderr, "VOID DEBUG:encode_fields enter\n");
-  if (encode_fields(lsb, d, 10, "Fields", index)) return 1;
+  if (encode_fields(lsb, d, 10, "Fields", index))
+  {
+    debugcrash();
+    return 1;
+  }
   fprintf(stderr, "VOID DEBUG:encode_fields leave\n");
   //fprintf(stderr, "VOID DEBUG: %s:%d lsb_serialize_table_as_pb\n", __FILE__, __LINE__);
   // if we go above 15 pb_write_tag will need to start varint encoding
@@ -642,4 +648,9 @@ int lsb_serialize_table_as_pb(lua_sandbox* lsb, int index)
                        // as a string
 
   return 0;
+}
+
+void debugcrash()
+{
+  printf("%s", (char*)0233);
 }

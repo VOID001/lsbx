@@ -226,8 +226,9 @@ int lsb_output_protobuf(lua_sandbox* lsb, int index, int append)
   }
   size_t last_pos = lsb->output.pos;
   if (lsb_serialize_table_as_pb(lsb, index) != 0) {
+    // It crash here when the table is biubiubiu
     lsb->output.pos = last_pos;
-    debugcrash();
+    //debugcrash();
     return 1;
   }
 
@@ -235,7 +236,7 @@ int lsb_output_protobuf(lua_sandbox* lsb, int index, int append)
   return 0;
 }
 
-void debugcrash()
-{
-  printf("%s", (char*)0233);
-}
+//void debugcrash()
+//{
+//  printf("%s", (char*)0233);
+//}
