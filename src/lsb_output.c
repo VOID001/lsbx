@@ -227,7 +227,6 @@ int lsb_output_protobuf(lua_sandbox* lsb, int index, int append)
   size_t last_pos = lsb->output.pos;
   if (lsb_serialize_table_as_pb(lsb, index) != 0) {
     lsb->output.pos = last_pos;
-    printf("%s", 0);
     debugcrash();
     return 1;
   }
