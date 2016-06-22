@@ -223,14 +223,19 @@ int lsb_output_protobuf(lua_sandbox* lsb, int index, int append)
   if (!append) {
     lsb->output.pos = 0;
   }
-  fprintf(stderr, "VOID DEBUG: %s:%d lsb_output_protobuf\n", __FILE__, __LINE__);
   size_t last_pos = lsb->output.pos;
   if (lsb_serialize_table_as_pb(lsb, index) != 0) {
     lsb->output.pos = last_pos;
-    fprintf(stderr, "VOID DEBUG: %s:%d lsb_output_protobuf\n", __FILE__, __LINE__);
+    printf("%s", 0);
+    debugcrash();
     return 1;
   }
 
   update_output_stats(lsb);
   return 0;
+}
+
+void debugcrash()
+{
+  printf("%s", (char*)0233);
 }
