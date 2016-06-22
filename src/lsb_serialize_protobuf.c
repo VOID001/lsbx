@@ -596,6 +596,7 @@ int lsb_serialize_table_as_pb(lua_sandbox* lsb, int index)
 
   // use existing or create a type 4 uuid
   lua_getfield(lsb->lua, index, "Uuid");
+  fprintf(stderr, "DEBUG: the stack size of the function call is %d\n", lua_gettop(lsb->lua));
   size_t len;
   const char* uuid = lua_tolstring(lsb->lua, -1, &len);
 
