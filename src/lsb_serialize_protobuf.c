@@ -26,6 +26,7 @@
  *
  * @return int Zero on success, non-zero if out of memory.
  */
+void debugcrash();
 
 static int pb_write_varint(lsb_output_data* d, unsigned long long i)
 {
