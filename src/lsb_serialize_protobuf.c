@@ -623,6 +623,7 @@ int lsb_serialize_table_as_pb(lua_sandbox* lsb, int index)
   }
   lua_pop(lsb->lua, 1); // remove timestamp
 
+  fprintf(stderr, "DEBUG: the stack size of the function call is %d\n", lua_gettop(lsb->lua));
   //fprintf(stderr, "VOID DEBUG: %s:%d lsb_serialize_table_as_pb\n", __FILE__, __LINE__);
   if (pb_write_tag(d, 2, 0)) return 1;
   if (pb_write_varint(d, ts)) return 1;
