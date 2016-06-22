@@ -20,6 +20,7 @@
 
 static const char* output_function = "lsb_output";
 
+void debugcrash();
 
 static void update_output_stats(lua_sandbox* lsb)
 {
