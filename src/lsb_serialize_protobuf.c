@@ -619,7 +619,6 @@ int lsb_serialize_table_as_pb(lua_sandbox* lsb, int index)
   lua_pop(lsb->lua, 1); // remove timestamp
 
   //fprintf(stderr, "VOID DEBUG: %s:%d lsb_serialize_table_as_pb\n", __FILE__, __LINE__);
-  int ret = 0;
   if (pb_write_tag(d, 2, 0)) return 1;
   if (pb_write_varint(d, ts)) return 1;
 
