@@ -26,7 +26,6 @@
  *
  * @return int Zero on success, non-zero if out of memory.
  */
-void debugcrash();
 
 static int pb_write_varint(lsb_output_data* d, unsigned long long i)
 {
@@ -522,6 +521,7 @@ static int
 encode_fields(lua_sandbox* lsb, lsb_output_data* d, char id, const char* name,
               int index)
 {
+  fprintf(stderr, "encode_fields(%X, %X, %c, %s, %d)\n", lsb, d, id, name, index);
   int result = 0;
   lua_getfield(lsb->lua, index, name);
   if (!lua_istable(lsb->lua, -1)) {
@@ -553,6 +553,7 @@ encode_fields(lua_sandbox* lsb, lsb_output_data* d, char id, const char* name,
       lua_pop(lsb->lua, 1); // remove the current field object
       lua_rawgeti(lsb->lua, -1, ++i); // grab the next field object
     }
+    void debugcrash();
     while (!lua_isnil(lsb->lua, -1));
   } else {
     lua_pop(lsb->lua, 1); // remove the array test value
@@ -583,6 +584,7 @@ encode_fields(lua_sandbox* lsb, lsb_output_data* d, char id, const char* name,
 
 int lsb_serialize_table_as_pb(lua_sandbox* lsb, int index)
 {
+  fprintf(stderr, "Call lsb_serialize_table_as_pb(%X, %d)\n", lsb, index);
   lsb_output_data* d = &lsb->output;
   d->pos = 0;
   size_t needed = 18;
@@ -590,7 +592,6 @@ int lsb_serialize_table_as_pb(lua_sandbox* lsb, int index)
     if (lsb_realloc_output(d, needed)) return 1;
   }
 
-  fprintf(stderr, "VOID DEBUG: %s:%d lsb_serialize_table_as_pb\n", __FILE__, __LINE__);
   // use existing or create a type 4 uuid
   lua_getfield(lsb->lua, index, "Uuid");
   size_t len;
@@ -634,7 +635,6 @@ int lsb_serialize_table_as_pb(lua_sandbox* lsb, int index)
   fprintf(stderr, "VOID DEBUG:encode_fields enter\n");
   if (encode_fields(lsb, d, 10, "Fields", index))
   {
-    debugcrash();
     return 1;
   }
   fprintf(stderr, "VOID DEBUG:encode_fields leave\n");
