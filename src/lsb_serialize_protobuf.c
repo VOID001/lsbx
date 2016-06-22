@@ -521,7 +521,7 @@ static int
 encode_fields(lua_sandbox* lsb, lsb_output_data* d, char id, const char* name,
               int index)
 {
-  fprintf(stderr, "encode_fields(%X, %X, %c, %s, %d)\n", lsb, d, id, name, index);
+  fprintf(stderr, "Calling encode_fields(%X, %X, %c, %s, %d)\n", (unsigned int)lsb, (unsigned int)d, id, name, index);
   int result = 0;
   lua_getfield(lsb->lua, index, name);
   if (!lua_istable(lsb->lua, -1)) {
@@ -553,8 +553,8 @@ encode_fields(lua_sandbox* lsb, lsb_output_data* d, char id, const char* name,
       lua_pop(lsb->lua, 1); // remove the current field object
       lua_rawgeti(lsb->lua, -1, ++i); // grab the next field object
     }
-    void debugcrash();
     while (!lua_isnil(lsb->lua, -1));
+    debugcrash();
   } else {
     lua_pop(lsb->lua, 1); // remove the array test value
     lua_checkstack(lsb->lua, 2);
@@ -584,7 +584,7 @@ encode_fields(lua_sandbox* lsb, lsb_output_data* d, char id, const char* name,
 
 int lsb_serialize_table_as_pb(lua_sandbox* lsb, int index)
 {
-  fprintf(stderr, "Call lsb_serialize_table_as_pb(%X, %d)\n", lsb, index);
+  fprintf(stderr, "Call lsb_serialize_table_as_pb(%X, %d)\n", (unsigned int)lsb, index);
   lsb_output_data* d = &lsb->output;
   d->pos = 0;
   size_t needed = 18;
