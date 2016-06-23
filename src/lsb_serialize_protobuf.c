@@ -669,6 +669,7 @@ int padding = 0;
 static int lua_debug_table(lua_sandbox *lsb, int index)
 {
   //It's not a table
+  fprintf(stderr, "Entering lua_debug_table\n");
   if(lua_type(lsb->lua, index)!=LUA_TTABLE)
   {
     return 0;
@@ -691,4 +692,5 @@ static int lua_debug_table(lua_sandbox *lsb, int index)
     }
     lua_pop(lsb->lua, 2);
   }
+  return 0;
 }
