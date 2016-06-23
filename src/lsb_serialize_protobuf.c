@@ -684,8 +684,9 @@ static int lua_debug_table(lua_sandbox *lsb, int index)
     //  padding-=2;
     //}
     //else
-      fprintf(stderr,"%s - %s\n", lua_typename(lsb->lua, lua_type(lsb->lua, -2))
-            ,lua_typename(lsb->lua, lua_type(lsb->lua, -1)));
+    char *keyname = lua_tolstring(lsb->lua, -2, NULL);
+    fprintf(stderr,"%s[%s] - %s\n", keyname, lua_typename(lsb->lua, lua_type(lsb->lua, -2))
+        ,lua_typename(lsb->lua, lua_type(lsb->lua, -1)));
     lua_pop(lsb->lua, 1);
   }
   return 0;
