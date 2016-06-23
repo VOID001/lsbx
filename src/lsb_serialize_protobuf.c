@@ -680,11 +680,11 @@ static int lua_debug_table(lua_sandbox *lsb, int index)
     if(lua_type(lsb->lua, -1) == LUA_TTABLE)
     {
       char *keyname = lua_tolstring(lsb->lua, -2, NULL);
-      padding+=2;
       for(int i = 0; i < padding; i++)
         fprintf(stderr, " ");
       fprintf(stderr,"%s[%s] - %s\n", keyname, lua_typename(lsb->lua, lua_type(lsb->lua, -2))
           ,lua_typename(lsb->lua, lua_type(lsb->lua, -1)));
+      padding+=2;
       lua_debug_table(lsb, lua_gettop(lsb->lua));
       lua_pop(lsb->lua, 1);
       padding-=2;
