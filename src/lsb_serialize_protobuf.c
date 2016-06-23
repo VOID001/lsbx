@@ -526,7 +526,7 @@ encode_fields(lua_sandbox* lsb, lsb_output_data* d, char id, const char* name,
   fprintf(stderr, "Calling encode_fields(%X, %X, %c, %s, %d)\n", (unsigned int)lsb, (unsigned int)d, id, name, index);
   int result = 0;
   lua_getfield(lsb->lua, index, name);
-  lua_debug_table(lsb, 1);
+  lua_debug_table(lsb, 2);
   if (!lua_istable(lsb->lua, -1)) {
     return result;
   }
