@@ -526,8 +526,7 @@ encode_fields(lua_sandbox* lsb, lsb_output_data* d, char id, const char* name,
   fprintf(stderr, "Calling encode_fields(%X, %X, %c, %s, %d)\n", (unsigned int)lsb, (unsigned int)d, id, name, index);
   int result = 0;
   lua_getfield(lsb->lua, index, name);
-  fprintf(stderr, "Entering lua_debug_table\n");
-  lua_debug_table(lsb, 2);
+  //lua_debug_table(lsb, 2);
   if (!lua_istable(lsb->lua, -1)) {
     return result;
   }
@@ -563,6 +562,10 @@ encode_fields(lua_sandbox* lsb, lsb_output_data* d, char id, const char* name,
   } else {
     lua_pop(lsb->lua, 1); // remove the array test value
     lua_checkstack(lsb->lua, 2);
+
+    fprintf(stderr, "Entering lua_debug_table\n");
+    lua_debug_table(lsb, 2);
+
     lua_pushnil(lsb->lua);
     while (result == 0 && lua_next(lsb->lua, -2) != 0) {
       if (pb_write_tag(d, id, 2)) return 1;
@@ -579,7 +582,7 @@ encode_fields(lua_sandbox* lsb, lsb_output_data* d, char id, const char* name,
       if (encode_field_value(lsb, d, 1, NULL, -1)) return 1;
       if (update_field_length(d, len_pos)) return 1;
       lua_pop(lsb->lua, 1); // Remove the value leaving the key on top for
-                            // the next interation.
+                            // the next iteration.
     }
   }
   lua_pop(lsb->lua, 1); // remove the fields table
