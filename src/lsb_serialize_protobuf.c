@@ -532,6 +532,8 @@ encode_fields(lua_sandbox* lsb, lsb_output_data* d, char id, const char* name,
   lua_rawgeti(lsb->lua, -1, 1); // test for the array notation
   size_t len_pos, len;
   if (lua_istable(lsb->lua, -1)) {
+    printf("The first Field element is table, it will terminate now\n");
+    debugcrash();
     int i = 1;
     do {
       if (pb_write_tag(d, id, 2)) return 1;
@@ -555,7 +557,6 @@ encode_fields(lua_sandbox* lsb, lsb_output_data* d, char id, const char* name,
       lua_rawgeti(lsb->lua, -1, ++i); // grab the next field object
     }
     while (!lua_isnil(lsb->lua, -1));
-    debugcrash();
   } else {
     lua_pop(lsb->lua, 1); // remove the array test value
     lua_checkstack(lsb->lua, 2);
