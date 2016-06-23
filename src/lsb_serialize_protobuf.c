@@ -568,6 +568,8 @@ encode_fields(lua_sandbox* lsb, lsb_output_data* d, char id, const char* name,
 
     lua_pushnil(lsb->lua);
     while (result == 0 && lua_next(lsb->lua, -2) != 0) {
+      fprintf(stderr, "Loop..\n");
+      fprintf(stderr, "Current type is %s\n", lua_typename(lsb->lua, lua_type(lsb->lua, -1)));
       if (pb_write_tag(d, id, 2)) return 1;
       len_pos = d->pos;
       if (pb_write_varint(d, 0)) return 1;  // length tbd later
