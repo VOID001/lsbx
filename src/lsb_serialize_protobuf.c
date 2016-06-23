@@ -334,7 +334,7 @@ static int encode_field_object(lua_sandbox* lsb, lsb_output_data* d)
   return result;
 }
 
-
+//if (encode_field_value(lsb, d, 1, NULL, -1)) return 1;
 static int
 encode_field_value(lua_sandbox* lsb, lsb_output_data* d, int first,
                    const char* representation, int value_type)
@@ -344,6 +344,7 @@ encode_field_value(lua_sandbox* lsb, lsb_output_data* d, int first,
   const char* s;
 
   int t = lua_type(lsb->lua, -1);
+  fprintf("In encode field value, the type is %s\n", lua_typename(lsb->lua, t));
   switch (t) {
   case LUA_TSTRING:
     switch (value_type) {
