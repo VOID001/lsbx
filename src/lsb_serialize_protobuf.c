@@ -526,7 +526,7 @@ encode_fields(lua_sandbox* lsb, lsb_output_data* d, char id, const char* name,
   fprintf(stderr, "Calling encode_fields(%X, %X, %c, %s, %d)\n", (unsigned int)lsb, (unsigned int)d, id, name, index);
   int result = 0;
   lua_getfield(lsb->lua, index, name);
-  lua_debug_table(lsb, -1);
+  lua_debug_table(lsb, 1);
   if (!lua_istable(lsb->lua, -1)) {
     return result;
   }
@@ -669,7 +669,6 @@ int padding = 0;
 static int lua_debug_table(lua_sandbox *lsb, int index)
 {
   //It's not a table
-  fprintf(stderr, "Entering lua_debug_table\n");
   if(lua_type(lsb->lua, index)!=LUA_TTABLE)
   {
     return 0;
@@ -677,6 +676,7 @@ static int lua_debug_table(lua_sandbox *lsb, int index)
   lua_pushnil(lsb->lua);
   while(lua_next(lsb->lua, index) != 0)
   {
+    fprintf(stderr, "Entering lua_debug_table loop...\n");
     //if(lua_type(lsb->lua, -1) == LUA_TTABLE)
     //{
     //  padding+=2;
@@ -684,12 +684,8 @@ static int lua_debug_table(lua_sandbox *lsb, int index)
     //  padding-=2;
     //}
     //else
-    {
-      for(int i = 0; i < padding; i++)
-        printf(" ");
       fprintf(stderr,"%s - %s\n", lua_typename(lsb->lua, lua_type(lsb->lua, -2))
             ,lua_typename(lsb->lua, lua_type(lsb->lua, -1)));
-    }
     lua_pop(lsb->lua, 1);
   }
   return 0;
